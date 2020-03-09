@@ -6,7 +6,7 @@
  * - returns undefined if no matching book is found
  ****************************************************************/
 function getBookById(bookId, booksArray) {
-  return books.find(book => book.id === bookId);
+  return booksArray.find(book => book.id == bookId);
 }
 
 /**************************************************************
@@ -18,7 +18,7 @@ function getBookById(bookId, booksArray) {
  ****************************************************************/
 function getAuthorByName(authorName, authors) {
   return authors.find(
-    author => author.name.toLowercase() === authorName.toLowercase()
+    author => author.name.toLowerCase() == authorName.toLowerCase()
   );
 }
 
@@ -30,8 +30,8 @@ function getAuthorByName(authorName, authors) {
  ****************************************************************/
 function bookCountsByAuthor(authors) {
   return authors.map(auth => ({
-    author: author.name,
-    bookCount: author.books.length
+    "author": auth.name,
+    "bookCount": auth.books.length
   }));
 }
 
@@ -78,15 +78,17 @@ function titlesByAuthorName(authorName, authors, books) {
  * Note: assume there will never be a tie
  ****************************************************************/
 function mostProlificAuthor(authors) {
-  let prolificAuthor = authors[authors.length];
-
+  let prolificAuthor = 0;
+  var prolificAuthorname
   authors.forEach(author => {
-    if (author.books.length > prolificAuthor.books.length) {
-      prolificAuthor = author;
+    if (author.books.length > prolificAuthor) {
+      prolificAuthor = author.books.length;
+      prolificAuthorname = author.name;
+
     }
   });
 
-  return prolificAuthor.name;
+  return prolificAuthorname;
 
   /* One-liner using reduce and a ternary operator */
   // return authors.reduce((a, b) => (a.books.length > b.books.length ? a : b))
